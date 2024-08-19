@@ -1,0 +1,17 @@
+[extend]
+useDefault = true
+
+[[rules]]
+id = "anything with the string password"
+
+description = "testing a custom detection rule with the word 'password'"
+
+[[rules]]
+	description = "Hardcoded credentials in python"
+	file = '''^(.*?)\.(?:py)$''' # this regex needs to be fixed to detect only python files
+	regex = '''(?i)(?:secret|key|signature|password|pwd|pass|pw|token)(?:\w|\s*?)(?:=){1}(?:\s{0,10})[\"'`](.*?)[\"'`]''' # need to check the limits of this regex
+	tags = ["credentials", "hardcoded", "python"]
+	[[rules.Entropies]]
+		Min = "3"
+		Max = "7"
+		Group = "1"
